@@ -1,0 +1,119 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: normal;
+  letter-spacing: 0;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+img {
+  object-fit: cover !important;
+}
+
+a {
+  color: #222;
+  text-decoration: none;
+}
+
+p {
+  margin: 0;
+}
+
+/* ----------- Header -------- */
+
+.nav-link {
+  color: #222;
+}
+
+.fa-compass {
+  font-size: 2rem;
+  color: #ff385c;
+}
+
+/* ----------- Header -------- */
+
+/* ----------- Footer -------- */
+
+footer {
+  height: 7rem;
+  background-color: #f7f7f7;
+}
+
+.footer-social i {
+  font-size: 1.1rem;
+}
+
+/* ----------- Footer -------- */
+
+/* ----------- Card ---------- */
+
+.card {
+  border: none;
+}
+
+.card .list-title {
+  font-weight: 600;
+  color: #000;
+  font-size: 0.9rem;
+}
+
+.card .list-price {
+  font-weight: 500;
+  color: #6a6a6a;
+  font-size: 0.8rem;
+}
+
+.card-img-overlay {
+  opacity: 0;
+  background-color: #fff;
+}
+
+.card-img-overlay:hover {
+  opacity: 0.2;
+}
+
+/* ----------- Card ---------- */
+
+/* ----------- New Listing --------- */
+
+.add-btn {
+  background-color: #ff385c;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  line-height: 1.4;
+}
+
+.add-btn:hover {
+  background-color: #e00b41;
+}
+
+/* ----------- New Listing --------- */
+
+/* ----------- Edit Listing --------- */
+
+.edit-btn {
+  background-color: #ff385c;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  line-height: 1.4;
+}
+
+.edit-btn:hover {
+  background-color: #e00b41;
+}
+
+/* ----------- Edit Listing --------- */
