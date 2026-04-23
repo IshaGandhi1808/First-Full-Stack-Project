@@ -9,10 +9,12 @@
   "author": "Isha",
   "license": "ISC",
   "dependencies": {
+    "connect-flash": "^0.1.1",
     "cors": "^2.8.6",
     "ejs": "^3.1.10",
     "ejs-mate": "^4.0.0",
     "express": "^5.2.1",
+    "express-session": "^1.19.0",
     "joi": "^18.1.2",
     "method-override": "^3.0.0",
     "mongoose": "^9.0.2"

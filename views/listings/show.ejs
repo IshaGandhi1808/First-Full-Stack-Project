@@ -2,6 +2,7 @@
 
 <div class="row">
   <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+    <%- include("../includes/flashMsg.ejs") %>
     <h3 class="mb-3"><%= listing.title %></h3>
     <!-- <h3 class="mb-3">Listing Details</h3> -->
     <div class="card card-img">
@@ -74,6 +75,9 @@
   </div>
 </div>
 
+<% if (listing.reviews.length > 0) {  %>
+  
+
 <div class="row">
   <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-10 offset-md-1">
     <hr />
@@ -98,3 +102,5 @@
     </div>
   </div>
 </div>
+
+<% }  %>

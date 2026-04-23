@@ -1,6 +1,7 @@
 <% layout("./layout/boilerplate.ejs") %>
 <div class="row">
   <div class="col-xl-8 offset-xl-2 col-md-10 offset-md-1">
+    <%- include("../includes/flashMsg.ejs") %>
     <h3 class="mb-3">Edit your Listing</h3>
     <form
       action="/listings/<%= listing._id %>?_method=PUT"
