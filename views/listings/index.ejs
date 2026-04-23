@@ -6,7 +6,7 @@
 <div class="row row-cols-xxl-6 row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1">
   <% for(listing of allListing) { %>
     <div class="col p-2">
-    <div class="card mb-4 p-0">
+    <div class="card mb-4 p-0 card-img">
       <a href="listings/<%= listing._id %>" class="d-flex flex-column gap-2">
         <img src="<%= listing.image %>" class="card-img-top rounded-4" alt="Card Image" style="aspect-ratio: 1/1;">
         <div class="card-img-overlay"></div>
