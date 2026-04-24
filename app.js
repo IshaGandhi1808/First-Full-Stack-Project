@@ -8,6 +8,7 @@ const ejsMate = require("ejs-mate");
 
 const listingsRouter = require("./routes/listingsRoute");
 const reviewsRouter = require("./routes/reviewsRoute");
+const usersRouter = require("./routes/usersRoute");
 
 const cors = require("cors");
 app.use(cors());
@@ -16,6 +17,9 @@ const ExpressError = require("./utils/ExpressError");
 
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
@@ -50,11 +54,20 @@ let sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash()); // ** For use connect-flash package, We have to use express-session package before it **
 
+// Configure Passport/Passport-Local
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // Flash Message Middleware
 
 app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   res.locals.success = req.flash("success");
+  res.locals.currUser = req.user;
   next();
 });
 
@@ -69,6 +82,10 @@ app.use("/listings", listingsRouter);
 // reviews Route
 
 app.use("/listings/:id/reviews", reviewsRouter);
+
+// users Route
+
+app.use("/", usersRouter);
 
 // Error Handling
 

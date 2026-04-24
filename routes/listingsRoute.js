@@ -8,6 +8,7 @@ const ExpressError = require("../utils/ExpressError");
 // joi ===> schema object validation
 
 const { listingSchema } = require("../schema");
+const { isLogin } = require("../middleware");
 
 // middleware
 
@@ -37,7 +38,7 @@ router.get(
 
 // create New Listing form
 
-router.get("/new", (req, res) => {
+router.get("/new", isLogin, (req, res) => {
   res.render("listings/new");
 });
 
@@ -45,10 +46,12 @@ router.get("/new", (req, res) => {
 
 router.post(
   "/",
+  isLogin,
   validateListings,
   wrapAsync(async (req, res, next) => {
     let newListing = new Listing(req.body.listing);
     await newListing.save();
+
     // req.flash("error", "Creation failed. Please try again.");
     req.flash("success", "New record added successfully!");
     res.redirect("/listings");
@@ -76,6 +79,7 @@ router.get(
 
 router.get(
   "/:id/edit",
+  isLogin,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
@@ -91,6 +95,7 @@ router.get(
 
 router.put(
   "/:id",
+  isLogin,
   validateListings,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
@@ -106,6 +111,7 @@ router.put(
 
 router.delete(
   "/:id",
+  isLogin,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndDelete(id);

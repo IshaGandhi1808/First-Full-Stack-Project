@@ -9,6 +9,7 @@ const ExpressError = require("../utils/ExpressError");
 // joi ===> schema object validation
 
 const { reviewSchema } = require("../schema");
+const { isLogin } = require("../middleware");
 
 // Review Schema validation Middleware
 
@@ -26,7 +27,8 @@ const validateReview = async (req, res, next) => {
 
 router.post(
   "/",
-  // validateReview,
+  isLogin,
+  validateReview,
   wrapAsync(async (req, res) => {
     let newReview = new Review(req.body.review);
 
@@ -47,6 +49,7 @@ router.post(
 
 router.delete(
   "/:reviewId",
+  isLogin,
   wrapAsync(async (req, res) => {
     let { id, reviewId } = req.params;
     await Review.findByIdAndDelete(reviewId);
