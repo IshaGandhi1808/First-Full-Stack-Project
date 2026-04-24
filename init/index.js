@@ -14,8 +14,23 @@ async function main() {
 
 const addListing = async () => {
   await Listing.deleteMany({});
+
+  // ** Add listing owner using JS **
+
+  // initData.data = initData.data.map((listing) => ({
+  //   ...listing,
+  //   owner: "69eb6a8af7b8513b79aec841",
+  // }));
+
   let listings = await Listing.insertMany(initData.data);
-  console.log(listings);
+
+  // ** Add listing owner using mongoose query **
+
+  let newListings = await Listing.updateMany(
+    {},
+    { owner: "69eb6a8af7b8513b79aec841" },
+  );
+  console.log(newListings);
 };
 
 addListing();

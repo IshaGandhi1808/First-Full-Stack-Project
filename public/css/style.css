@@ -16,6 +16,15 @@ body {
   min-height: 100svh;
 }
 
+body::-webkit-scrollbar {
+  width: 7px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 0.5rem;
+}
+
 img {
   object-fit: cover !important;
 }

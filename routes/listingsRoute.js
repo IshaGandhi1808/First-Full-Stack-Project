@@ -8,7 +8,7 @@ const ExpressError = require("../utils/ExpressError");
 // joi ===> schema object validation
 
 const { listingSchema } = require("../schema");
-const { isLogin } = require("../middleware");
+const { isLogin, listingAuthentication } = require("../middleware");
 
 // middleware
 
@@ -50,6 +50,7 @@ router.post(
   validateListings,
   wrapAsync(async (req, res, next) => {
     let newListing = new Listing(req.body.listing);
+    newListing.owner = req.user;
     await newListing.save();
 
     // req.flash("error", "Creation failed. Please try again.");
@@ -64,7 +65,15 @@ router.get(
   "/:id",
   wrapAsync(async (req, res) => {
     let { id } = req.params;
-    let listing = await Listing.findById(id).populate("reviews");
+    let listing = await Listing.findById(id)
+      // .populate("reviews")
+      .populate({
+        path: "reviews",
+        populate: {
+          path: "author",
+        },
+      })
+      .populate("owner");
     if (!listing) {
       req.flash("error", "Failed to load data.");
       return res.redirect("/listings");
@@ -80,9 +89,11 @@ router.get(
 router.get(
   "/:id/edit",
   isLogin,
+  listingAuthentication,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
+
     if (!listing) {
       req.flash("error", "The item you’re trying to Edit was not found.");
       return res.redirect("/listings");
@@ -96,6 +107,7 @@ router.get(
 router.put(
   "/:id",
   isLogin,
+  listingAuthentication,
   validateListings,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
@@ -112,6 +124,7 @@ router.put(
 router.delete(
   "/:id",
   isLogin,
+  listingAuthentication,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndDelete(id);

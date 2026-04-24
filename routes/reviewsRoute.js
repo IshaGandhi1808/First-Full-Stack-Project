@@ -9,7 +9,7 @@ const ExpressError = require("../utils/ExpressError");
 // joi ===> schema object validation
 
 const { reviewSchema } = require("../schema");
-const { isLogin } = require("../middleware");
+const { isLogin, reviewAuthentication } = require("../middleware");
 
 // Review Schema validation Middleware
 
@@ -32,6 +32,7 @@ router.post(
   wrapAsync(async (req, res) => {
     let newReview = new Review(req.body.review);
 
+    newReview.author = req.user._id;
     let listing = await Listing.findById(req.params.id);
 
     listing.reviews.push(newReview);
@@ -50,8 +51,10 @@ router.post(
 router.delete(
   "/:reviewId",
   isLogin,
+  reviewAuthentication,
   wrapAsync(async (req, res) => {
     let { id, reviewId } = req.params;
+
     await Review.findByIdAndDelete(reviewId);
 
     await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
