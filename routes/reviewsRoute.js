@@ -26,15 +26,12 @@ const validateReview = async (req, res, next) => {
 
 // create review route
 
-router.post("/", isLogin, validateReview, wrapAsync(createReview));
+router.route("/").post(isLogin, validateReview, wrapAsync(createReview));
 
 // Delete review route
 
-router.delete(
-  "/:reviewId",
-  isLogin,
-  reviewAuthentication,
-  wrapAsync(destroyReview),
-);
+router
+  .route("/:reviewId")
+  .delete(isLogin, reviewAuthentication, wrapAsync(destroyReview));
 
 module.exports = router;

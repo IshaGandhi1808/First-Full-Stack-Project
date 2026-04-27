@@ -34,51 +34,39 @@ const validateListings = (req, res, next) => {
 };
 
 // (Home) index page - view all Listing
-
-router.get("/", wrapAsync(index));
-
 // create New Listing
+// Add new Listing in listings
+
+router
+  .route("/")
+  .get(wrapAsync(index))
+  .post(isLogin, validateListings, wrapAsync(createListing));
 
 // create New Listing form
 
-router.get("/new", isLogin, renderNewForm);
-
-// Add new Listing in listings
-
-router.post("/", isLogin, validateListings, wrapAsync(createListing));
+router.route("/new").get(isLogin, renderNewForm);
 
 // show listing
+// Update List
+// Delete Route
 
-router.get("/:id", wrapAsync(showListing));
+router
+  .route("/:id")
+  .get(wrapAsync(showListing))
+  .put(
+    isLogin,
+    listingAuthentication,
+    validateListings,
+    wrapAsync(updateListing),
+  )
+  .delete(isLogin, listingAuthentication, wrapAsync(destroyListing));
 
 // update Route
 
 // Edit form
 
-router.get(
-  "/:id/edit",
-  isLogin,
-  listingAuthentication,
-  wrapAsync(renderEditForm),
-);
-
-// Update List
-
-router.put(
-  "/:id",
-  isLogin,
-  listingAuthentication,
-  validateListings,
-  wrapAsync(updateListing),
-);
-
-// Delete Route
-
-router.delete(
-  "/:id",
-  isLogin,
-  listingAuthentication,
-  wrapAsync(destroyListing),
-);
+router
+  .route("/:id/edit")
+  .get(isLogin, listingAuthentication, wrapAsync(renderEditForm));
 
 module.exports = router;

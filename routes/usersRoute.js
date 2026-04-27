@@ -16,33 +16,29 @@ const {
 // signup Route
 
 // Get signup form
-
-router.get("/signup", renderSignupForm);
-
 // post signup
 
-router.post("/signup", wrapAsync(signup));
+router.route("/signup").get(renderSignupForm).post(wrapAsync(signup));
 
 // login Route
 
 // Get login form
-
-router.get("/login", renderLoginForm);
-
 // post login
 
-router.post(
-  "/login",
-  saveOriginalUrl,
-  passport.authenticate("local", {
-    failureFlash: true,
-    failureRedirect: "/login",
-  }),
-  wrapAsync(login),
-);
+router
+  .route("/login")
+  .get(renderLoginForm)
+  .post(
+    saveOriginalUrl,
+    passport.authenticate("local", {
+      failureFlash: true,
+      failureRedirect: "/login",
+    }),
+    wrapAsync(login),
+  );
 
 // logout route
 
-router.get("/logout", logout);
+router.route("/logout").get(logout);
 
 module.exports = router;
