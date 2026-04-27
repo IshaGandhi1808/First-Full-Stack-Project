@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV != "production") {
+  const env = require("dotenv").config();
+}
+
 const express = require("express");
 const app = express();
 const port = 3000;
@@ -96,6 +100,7 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   const { status = 500, message = "something went wrong!" } = err;
   // res.status(status).send(message);
+
   res.render("error", { message });
 });
 

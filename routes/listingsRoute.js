@@ -19,6 +19,12 @@ const {
   destroyListing,
 } = require("../controllers/listings");
 
+const multer = require("multer");
+const { storage } = require("../cloudConfig");
+
+// const upload = multer({ dest: "uploads/" });
+const upload = multer({ storage });
+
 // middleware
 
 // listing schema validation
@@ -40,7 +46,12 @@ const validateListings = (req, res, next) => {
 router
   .route("/")
   .get(wrapAsync(index))
-  .post(isLogin, validateListings, wrapAsync(createListing));
+  .post(
+    isLogin,
+    validateListings,
+    upload.single("listing[image]"),
+    wrapAsync(createListing),
+  );
 
 // create New Listing form
 
@@ -56,6 +67,7 @@ router
   .put(
     isLogin,
     listingAuthentication,
+    upload.single("listing[image]"),
     validateListings,
     wrapAsync(updateListing),
   )

@@ -16,8 +16,14 @@ module.exports.renderNewForm = (req, res) => {
 // Create New Listing
 
 module.exports.createListing = async (req, res, next) => {
+  const url = req.file.path;
+  const filename = req.file.filename;
+
   let newListing = new Listing(req.body.listing);
-  newListing.owner = req.user;
+  newListing.owner = req.user._id;
+
+  newListing.image = { url, filename };
+
   await newListing.save();
 
   // req.flash("error", "Creation failed. Please try again.");
@@ -51,18 +57,30 @@ module.exports.renderEditForm = async (req, res) => {
   let { id } = req.params;
   let listing = await Listing.findById(id);
 
+  let imagePath = listing.image.url;
+  let newImage = imagePath.replace("upload/", "upload/h_150,w_150/f_auto/");
   if (!listing) {
     req.flash("error", "The item you’re trying to Edit was not found.");
     return res.redirect("/listings");
   }
-  res.render("listings/edit", { listing });
+  res.render("listings/edit", { listing, newImage });
 };
 
 // update listing
 
 module.exports.updateListing = async (req, res) => {
   let { id } = req.params;
-  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+  let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+
+  if (typeof req.file != "undefined") {
+    // if (req.file) {
+    let url = req.file.path;
+    let filename = req.file.filename;
+    listing.image = { url, filename };
+    await listing.save();
+  }
+  // }
+
   // req.flash("error", "Update failed. Please try again.");
   req.flash("success", "Changes saved successfully.");
 

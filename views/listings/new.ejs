@@ -4,7 +4,13 @@
   <div class="col-xl-8 offset-xl-2 col-md-10 offset-md-1">
     <%- include("../includes/flashMsg.ejs") %>
     <h3 class="mb-3">Create a New Listing</h3>
-    <form action="/listings" method="post" class="needs-validation" novalidate>
+    <form
+      action="/listings"
+      method="post"
+      class="needs-validation"
+      enctype="multipart/form-data"
+      novalidate
+    >
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input
@@ -32,7 +38,7 @@
         <div class="invalid-feedback">Please enter a description</div>
       </div>
 
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <label for="image-link" class="form-label">Image Link</label>
         <input
           type="text"
@@ -40,6 +46,19 @@
           class="form-control"
           id="image-link"
           placeholder="Enter Image URL/Link"
+        />
+        <div class="valid-feedback">Image uploaded successfully</div>
+        <div class="invalid-feedback">Please upload a valid image file</div>
+      </div> -->
+
+      <div class="mb-3">
+        <label for="image-link" class="form-label">Upload Image </label>
+        <input
+          type="file"
+          name="listing[image]"
+          class="form-control"
+          id="image-link"
+          required
         />
         <div class="valid-feedback">Image uploaded successfully</div>
         <div class="invalid-feedback">Please upload a valid image file</div>

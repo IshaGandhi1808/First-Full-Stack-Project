@@ -8,6 +8,7 @@
       method="post"
       novalidate
       class="needs-validation"
+      enctype="multipart/form-data"
     >
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
@@ -36,19 +37,21 @@
         <div class="valid-feedback">Description accepted</div>
         <div class="invalid-feedback">Please enter a description</div>
       </div>
-      <div class="mb-3">
-        <label for="image-link" class="form-label">Image Link</label>
-        <input
-          type="text"
-          name="listing[image]"
-          value="<%= listing.image %>"
-          id="image-link"
-          class="form-control"
-          required
-        />
-        <div class="valid-feedback">Image uploaded successfully</div>
-        <div class="invalid-feedback">Please upload a valid image file</div>
+      <div class="image-upload-container d-flex gap-4 align-items-end pb-3">
+        <img src="<%= newImage %>" alt="" onclick="openFullImage()" />
+        <div class="mb-3 w-100">
+          <label for="image-link" class="form-label">Upload New Image </label>
+          <input
+            type="file"
+            name="listing[image]"
+            id="image-link"
+            class="form-control"
+          />
+          <div class="valid-feedback">Image uploaded successfully</div>
+          <div class="invalid-feedback">Please upload a valid image file</div>
+        </div>
       </div>
+
       <div class="row">
         <div class="mb-3 col-sm-4">
           <label for="price" class="form-label">Price</label>
@@ -103,3 +106,24 @@
     </form>
   </div>
 </div>
+
+<div class="full-screen">
+  <div class="show-image">
+    <img src="<%= listing.image.url %>" alt="" />
+    <button class="close-img" onclick="closeFullImage()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+</div>
+
+<script>
+  let target = document.querySelector(".full-screen");
+  function openFullImage() {
+    target.classList.add("active");
+    document.body.style.overflowY = "hidden";
+  }
+  function closeFullImage() {
+    target.classList.remove("active");
+    document.body.style.overflowY = "auto";
+  }
+</script>

@@ -14,6 +14,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100svh;
+  position: relative;
 }
 
 body::-webkit-scrollbar {
@@ -137,6 +138,7 @@ footer {
   display: inline-block;
   overflow: hidden;
   height: 3.7rem;
+  line-height: 1.2;
   transition: height 0.4s linear;
 }
 
@@ -155,7 +157,7 @@ footer {
 
 .review-card {
   min-height: 15rem;
-  min-height: 13rem;
+  min-height: 14rem;
 }
 
 .review-card > .card-body {
@@ -164,3 +166,55 @@ footer {
 }
 
 /* ------- review card ----- */
+
+/* ------- Edit form Image --------- */
+
+.image-upload-container > img {
+  /* height: 200px; */
+  width: 200px;
+  height: 8rem;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.show-image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.show-image > img {
+  max-height: 90svh;
+}
+
+.full-screen.active {
+  display: flex;
+  z-index: 1021;
+}
+
+.full-screen {
+  display: none;
+  background-color: #000000b5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  backdrop-filter: blur(4px);
+}
+
+.close-img {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 2.3rem;
+  background-color: #00000082;
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  padding: 0.4rem;
+}
+
+/* ------- Edit form Image --------- */

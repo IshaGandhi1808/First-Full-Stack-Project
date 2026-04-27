@@ -3,11 +3,11 @@
 <div class="row">
   <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-10 offset-md-1">
     <%- include("../includes/flashMsg.ejs") %>
-    <h3 class="mb-3"><%= listing.title %></h3>
+    <h3 class="mb-3 fw-semibold"><%= listing.title %></h3>
     <!-- <h3 class="mb-3">Listing Details</h3> -->
     <div class="card card-img">
       <img
-        src="<%= listing.image %>"
+        src="<%= listing.image.url %>"
         alt="Listing Image"
         class="card-img-top rounded-4"
         style="height: 20rem"
@@ -49,16 +49,34 @@
         novalidate
         class="needs-validation"
       >
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <label for="rating" class="form-label">Rating</label>
           <input
-            type="range"
-            name="review[rating]"
-            id="rating"
-            class="form-range"
-            min="1"
-            max="5"
+          type="range"
+          name="review[rating]"
+          id="rating"
+          class="form-range"
+          min="1"
+          max="5"
           />
+          <div class="valid-feedback">Rating selected!</div>
+          <div class="invalid-feedback">Please select a rating.</div>
+        </div> -->
+        <div class="">
+          <label for="rating" class="form-label">Rating</label>
+          <fieldset class="starability-slot">
+            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+            <label for="first-rate1" title="Terrible">1 star</label>
+            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+            <label for="first-rate2" title="Not good">2 stars</label>
+            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+            <label for="first-rate3" title="Average">3 stars</label>
+            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+            <label for="first-rate4" title="Very good">4 stars</label>
+            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+            <label for="first-rate5" title="Amazing">5 stars</label>
+          </fieldset>
           <div class="valid-feedback">Rating selected!</div>
           <div class="invalid-feedback">Please select a rating.</div>
         </div>
@@ -99,7 +117,7 @@
       <div class="card review-card">
         <div class="card-body">
           <h5 class="card-title">@<%= review.author.username %></h5>
-          <p class="card-text"><%= review.rating %></p>
+            <p class="starability-result card-text mb-2" data-rating="<%= review.rating %>"><%= review.rating %></p>
           <p class="card-text"> <span class="short-text" > <%= review.content %></span> <span class=" toggleText more-text" onclick="showFunction(this)">Read more...</span></p>
 
           <% if (currUser) { %>
@@ -123,12 +141,18 @@
 
   const toggleText = document.querySelectorAll(".toggleText")
   toggleText.forEach((text) => {
-    if (text.previousElementSibling.innerText.length > 30) {
+    let content = text.previousElementSibling;
+    
+    let lineHeight = parseFloat(getComputedStyle(text.previousElementSibling).lineHeight)
+    let totalHeight = content.scrollHeight;
+    let targetLine = parseInt(totalHeight/lineHeight);
+
+    if ( targetLine > 3) {
+    // if (text.previousElementSibling.innerText.length > 300) {
       text.style.display = ""
     } else {
       text.style.display = "none"
     }
-    console.log();
     
   })
 
