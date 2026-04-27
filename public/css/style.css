@@ -187,6 +187,7 @@ footer {
 
 .show-image > img {
   max-height: 90svh;
+  max-width: 90vw;
 }
 
 .full-screen.active {
