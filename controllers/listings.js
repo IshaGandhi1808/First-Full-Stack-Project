@@ -1,0 +1,80 @@
+const Listing = require("../models/listing");
+
+// index
+
+module.exports.index = async (req, res) => {
+  let allListing = await Listing.find();
+  res.render("listings/index", { allListing });
+};
+
+//Create New Listing form
+
+module.exports.renderNewForm = (req, res) => {
+  res.render("listings/new");
+};
+
+// Create New Listing
+
+module.exports.createListing = async (req, res, next) => {
+  let newListing = new Listing(req.body.listing);
+  newListing.owner = req.user;
+  await newListing.save();
+
+  // req.flash("error", "Creation failed. Please try again.");
+  req.flash("success", "New record added successfully!");
+  res.redirect("/listings");
+};
+
+// show listing
+
+module.exports.showListing = async (req, res) => {
+  let { id } = req.params;
+  let listing = await Listing.findById(id)
+    // .populate("reviews")
+    .populate({
+      path: "reviews",
+      populate: {
+        path: "author",
+      },
+    })
+    .populate("owner");
+  if (!listing) {
+    req.flash("error", "Failed to load data.");
+    return res.redirect("/listings");
+  }
+  res.render("listings/show", { listing });
+};
+
+// Edit Listing Form
+
+module.exports.renderEditForm = async (req, res) => {
+  let { id } = req.params;
+  let listing = await Listing.findById(id);
+
+  if (!listing) {
+    req.flash("error", "The item you’re trying to Edit was not found.");
+    return res.redirect("/listings");
+  }
+  res.render("listings/edit", { listing });
+};
+
+// update listing
+
+module.exports.updateListing = async (req, res) => {
+  let { id } = req.params;
+  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+  // req.flash("error", "Update failed. Please try again.");
+  req.flash("success", "Changes saved successfully.");
+
+  res.redirect(`/listings/${id}`);
+};
+
+// delete listing
+
+module.exports.destroyListing = async (req, res) => {
+  let { id } = req.params;
+  await Listing.findByIdAndDelete(id);
+  // req.flash("error", "Deletion failed. Please try again.");
+  req.flash("success", "Deleted successfully.");
+  res.redirect("/listings");
+};

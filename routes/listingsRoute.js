@@ -9,6 +9,15 @@ const ExpressError = require("../utils/ExpressError");
 
 const { listingSchema } = require("../schema");
 const { isLogin, listingAuthentication } = require("../middleware");
+const {
+  index,
+  renderNewForm,
+  createListing,
+  showListing,
+  renderEditForm,
+  updateListing,
+  destroyListing,
+} = require("../controllers/listings");
 
 // middleware
 
@@ -26,61 +35,21 @@ const validateListings = (req, res, next) => {
 
 // (Home) index page - view all Listing
 
-router.get(
-  "/",
-  wrapAsync(async (req, res) => {
-    let allListing = await Listing.find();
-    res.render("listings/index", { allListing });
-  }),
-);
+router.get("/", wrapAsync(index));
 
 // create New Listing
 
 // create New Listing form
 
-router.get("/new", isLogin, (req, res) => {
-  res.render("listings/new");
-});
+router.get("/new", isLogin, renderNewForm);
 
 // Add new Listing in listings
 
-router.post(
-  "/",
-  isLogin,
-  validateListings,
-  wrapAsync(async (req, res, next) => {
-    let newListing = new Listing(req.body.listing);
-    newListing.owner = req.user;
-    await newListing.save();
-
-    // req.flash("error", "Creation failed. Please try again.");
-    req.flash("success", "New record added successfully!");
-    res.redirect("/listings");
-  }),
-);
+router.post("/", isLogin, validateListings, wrapAsync(createListing));
 
 // show listing
 
-router.get(
-  "/:id",
-  wrapAsync(async (req, res) => {
-    let { id } = req.params;
-    let listing = await Listing.findById(id)
-      // .populate("reviews")
-      .populate({
-        path: "reviews",
-        populate: {
-          path: "author",
-        },
-      })
-      .populate("owner");
-    if (!listing) {
-      req.flash("error", "Failed to load data.");
-      return res.redirect("/listings");
-    }
-    res.render("listings/show", { listing });
-  }),
-);
+router.get("/:id", wrapAsync(showListing));
 
 // update Route
 
@@ -90,16 +59,7 @@ router.get(
   "/:id/edit",
   isLogin,
   listingAuthentication,
-  wrapAsync(async (req, res) => {
-    let { id } = req.params;
-    let listing = await Listing.findById(id);
-
-    if (!listing) {
-      req.flash("error", "The item you’re trying to Edit was not found.");
-      return res.redirect("/listings");
-    }
-    res.render("listings/edit", { listing });
-  }),
+  wrapAsync(renderEditForm),
 );
 
 // Update List
@@ -109,14 +69,7 @@ router.put(
   isLogin,
   listingAuthentication,
   validateListings,
-  wrapAsync(async (req, res) => {
-    let { id } = req.params;
-    await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-    // req.flash("error", "Update failed. Please try again.");
-    req.flash("success", "Changes saved successfully.");
-
-    res.redirect(`/listings/${id}`);
-  }),
+  wrapAsync(updateListing),
 );
 
 // Delete Route
@@ -125,13 +78,7 @@ router.delete(
   "/:id",
   isLogin,
   listingAuthentication,
-  wrapAsync(async (req, res) => {
-    let { id } = req.params;
-    await Listing.findByIdAndDelete(id);
-    // req.flash("error", "Deletion failed. Please try again.");
-    req.flash("success", "Deleted successfully.");
-    res.redirect("/listings");
-  }),
+  wrapAsync(destroyListing),
 );
 
 module.exports = router;
