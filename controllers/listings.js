@@ -125,7 +125,7 @@ module.exports.updateListing = async (req, res) => {
   // }
 
   listing.geometry = result;
-  await listing.save();
+  let updatedListing = await listing.save();
 
   // req.flash("error", "Update failed. Please try again.");
   req.flash("success", "Changes saved successfully.");

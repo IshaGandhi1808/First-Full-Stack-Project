@@ -38,23 +38,54 @@
         <div class="valid-feedback">Description accepted</div>
         <div class="invalid-feedback">Please enter a description</div>
       </div>
-      <div class="image-upload-container d-sm-flex gap-4 align-items-end pb-3">
-        <img
-          src="<%= newImage %>"
-          alt=""
-          onclick="openFullImage()"
-          loading="lazy"
-        />
-        <div class="mb-3 w-100 mt-2">
-          <label for="image-link" class="form-label">Upload New Image </label>
-          <input
-            type="file"
-            name="listing[image]"
-            id="image-link"
-            class="form-control"
+      <div class="row align-items-end pb-3">
+        <div
+          class="image-upload-container d-sm-flex align-items-end gap-4 col-sm-7"
+        >
+          <img
+            src="<%= newImage %>"
+            alt=""
+            onclick="openFullImage()"
+            loading="lazy"
           />
-          <div class="valid-feedback">Image uploaded successfully</div>
-          <div class="invalid-feedback">Please upload a valid image file</div>
+
+          <div class="mb-3 w-100 mt-2">
+            <label for="image-link" class="form-label">Upload New Image </label>
+            <input
+              type="file"
+              name="listing[image]"
+              id="image-link"
+              class="form-control"
+            />
+            <div class="valid-feedback">Image uploaded successfully</div>
+            <div class="invalid-feedback">Please upload a valid image file</div>
+          </div>
+        </div>
+
+        <div class="mb-3 col-sm-5">
+          <label for="category" class="form-label">Select Category</label>
+          <select
+            class="form-select"
+            aria-label="Default select example"
+            id="category"
+            name="listing[category]"
+          >
+            <option selected><%= listing.category %></option>
+            <option value="Farmhouse">Farmhouse</option>
+            <option value="Rooms">Rooms</option>
+            <option value="Amazing views">Amazing views</option>
+            <option value="Iconic cities">Iconic cities</option>
+            <option value="Surfing">Surfing</option>
+            <option value="Beach">Beach</option>
+            <option value="Cabin">Cabin</option>
+            <option value="Lakefront">Lakefront</option>
+            <option value="Trending">Trending</option>
+            <option value="Historical homes">Historical homes</option>
+          </select>
+          <div class="valid-feedback">Your selection has been accepted.</div>
+          <div class="invalid-feedback">
+            Please select a category from the dropdown.
+          </div>
         </div>
       </div>
 

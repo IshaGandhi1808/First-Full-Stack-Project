@@ -1,4 +1,4 @@
-const { ref } = require("joi");
+const { ref, required } = require("joi");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review");
@@ -47,6 +47,23 @@ const listingSchema = new Schema({
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User",
+  },
+
+  category: {
+    type: String,
+    enum: [
+      "Farmhouse",
+      "Rooms",
+      "Amazing views",
+      "Iconic cities",
+      "Surfing",
+      "Beach",
+      "Cabin",
+      "Lakefront",
+      "Trending",
+      "Historical homes",
+    ],
+    required: true,
   },
 });
 

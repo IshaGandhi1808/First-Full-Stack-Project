@@ -52,17 +52,44 @@
         <div class="invalid-feedback">Please upload a valid image file</div>
       </div> -->
 
-      <div class="mb-3">
-        <label for="image-link" class="form-label">Upload Image </label>
-        <input
-          type="file"
-          name="listing[image]"
-          class="form-control"
-          id="image-link"
-          required
-        />
-        <div class="valid-feedback">Image uploaded successfully</div>
-        <div class="invalid-feedback">Please upload a valid image file</div>
+      <div class="row">
+        <div class="mb-3 col-sm-7">
+          <label for="image-link" class="form-label">Upload Image </label>
+          <input
+            type="file"
+            name="listing[image]"
+            class="form-control"
+            id="image-link"
+            required
+          />
+          <div class="valid-feedback">Image uploaded successfully</div>
+          <div class="invalid-feedback">Please upload a valid image file</div>
+        </div>
+
+        <div class="mb-3 col-sm-5">
+          <label for="category" class="form-label">Select Category</label>
+          <select
+            class="form-select"
+            aria-label="Default select example"
+            id="category"
+            name="listing[category]"
+          >
+            <option selected>Farmhouse</option>
+            <option value="Rooms">Rooms</option>
+            <option value="Amazing views">Amazing views</option>
+            <option value="Iconic cities">Iconic cities</option>
+            <option value="Surfing">Surfing</option>
+            <option value="Beach">Beach</option>
+            <option value="Cabin">Cabin</option>
+            <option value="Lakefront">Lakefront</option>
+            <option value="Trending">Trending</option>
+            <option value="Historical homes">Historical homes</option>
+          </select>
+          <div class="valid-feedback">Your selection has been accepted.</div>
+          <div class="invalid-feedback">
+            Please select a category from the dropdown.
+          </div>
+        </div>
       </div>
 
       <div class="row">
