@@ -16,6 +16,24 @@ module.exports.renderNewForm = (req, res) => {
 // Create New Listing
 
 module.exports.createListing = async (req, res, next) => {
+  let location = req.body.listing.location;
+
+  let URL = `https://nominatim.openstreetmap.org/search?q=${location}&format=geojson&limit=1`;
+  let response = await fetch(URL, {
+    headers: {
+      "User-Agent": "wanderlust",
+    },
+  });
+
+  let data = await response.json();
+
+  if (data.features.length === 0) {
+    req.flash("error", "Please enter a valid location to proceed.");
+    return res.redirect(`/listings/new`);
+  }
+
+  let result = data.features[0].geometry;
+
   const url = req.file.path;
   const filename = req.file.filename;
 
@@ -24,7 +42,14 @@ module.exports.createListing = async (req, res, next) => {
 
   newListing.image = { url, filename };
 
-  await newListing.save();
+  // newListing.image.url = newListing.image.url.replace(
+  //   "upload/",
+  //   "upload/w_600/f_auto/",
+  // );
+
+  newListing.geometry = result;
+
+  let newdata = await newListing.save();
 
   // req.flash("error", "Creation failed. Please try again.");
   req.flash("success", "New record added successfully!");
@@ -70,6 +95,24 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.updateListing = async (req, res) => {
   let { id } = req.params;
+  let location = req.body.listing.location;
+
+  let URL = `https://nominatim.openstreetmap.org/search?q=${location}&format=geojson&limit=1`;
+  let response = await fetch(URL, {
+    headers: {
+      "User-Agent": "wanderlust",
+    },
+  });
+
+  let data = await response.json();
+
+  if (data.features.length === 0) {
+    req.flash("error", "Please enter a valid location to proceed.");
+    return res.redirect(`/listings/${id}/edit`);
+  }
+
+  let result = data.features[0].geometry;
+
   let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
 
   if (typeof req.file != "undefined") {
@@ -80,6 +123,9 @@ module.exports.updateListing = async (req, res) => {
     await listing.save();
   }
   // }
+
+  listing.geometry = result;
+  await listing.save();
 
   // req.flash("error", "Update failed. Please try again.");
   req.flash("success", "Changes saved successfully.");

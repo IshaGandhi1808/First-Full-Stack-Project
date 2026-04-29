@@ -1,5 +1,15 @@
 <% layout("./layout/boilerplate.ejs") %>
 
+<!-- map libre  -->
+
+<link
+  href="https://unpkg.com/maplibre-gl@^5.24.0/dist/maplibre-gl.css"
+  rel="stylesheet"
+/>
+<script src="https://unpkg.com/maplibre-gl@^5.24.0/dist/maplibre-gl.js"></script>
+
+<!-- map libre  -->
+
 <div class="row">
   <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-10 offset-md-1">
     <%- include("../includes/flashMsg.ejs") %>
@@ -10,7 +20,7 @@
         src="<%= listing.image.url %>"
         alt="Listing Image"
         class="card-img-top rounded-4"
-        style="height: 20rem"
+        style="height: 20rem" loading="lazy"
       />
       <div class="card-body px-0 py-1">
         <!-- <p class="card-text"><b><%= listing.title %></b></p> -->
@@ -137,44 +147,21 @@
 
 <% }  %>
 
+<div class="row">
+  <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+    <hr />
+    <h4 class="my-3 fw-semibold">Where you’ll be</h4>
+    <p class="pb-4"><%= listing.location %>
+      <!-- , <%= listing.country %> -->
+    </p>
+    <div id="map"></div>
+  </div>
+</div>
+
 <script>
-
-  const toggleText = document.querySelectorAll(".toggleText")
-  toggleText.forEach((text) => {
-    let content = text.previousElementSibling;
-    
-    let lineHeight = parseFloat(getComputedStyle(text.previousElementSibling).lineHeight)
-    let totalHeight = content.scrollHeight;
-    let targetLine = parseInt(totalHeight/lineHeight);
-
-    if ( targetLine > 3) {
-    // if (text.previousElementSibling.innerText.length > 300) {
-      text.style.display = ""
-    } else {
-      text.style.display = "none"
-    }
-    
-  })
-
-function showFunction(text) {
-  let content = text.parentElement
-    
-  let myText = content.querySelector(".short-text")
-
-  if (text.classList.contains("more-text")) {
-    myText.style.height = myText.scrollHeight + "px";
-    text.classList.remove("more-text");
-    text.innerText = "Read less"
-    return text.classList.add("less-text");
-    
-  }
-  
-  if (text.classList.contains("less-text")) {
-    myText.style.height = "3.7rem"
-    text.classList.remove("less-text")
-    text.innerText = "Read more..."
-      return text.classList.add("more-text")
-  }
-}
-  
+  const listing = <%- JSON.stringify(listing) %>
 </script>
+
+<script src="/JS/map.js"></script>
+
+<script src="/JS/reviewAnimation.js"></script>

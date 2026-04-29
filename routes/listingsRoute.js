@@ -8,7 +8,11 @@ const ExpressError = require("../utils/ExpressError");
 // joi ===> schema object validation
 
 const { listingSchema } = require("../schema");
-const { isLogin, listingAuthentication } = require("../middleware");
+const {
+  isLogin,
+  listingAuthentication,
+  findCoordinates,
+} = require("../middleware");
 const {
   index,
   renderNewForm,

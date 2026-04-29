@@ -22,6 +22,19 @@ const addListing = async () => {
   //   owner: "69eb6a8af7b8513b79aec841",
   // }));
 
+  initData.data = initData.data.map((listing) => {
+    let originalUrl = listing.image.url;
+    let filename = listing.image.filename;
+    originalUrl += "?w=600&auto=format&fit=crop";
+    return {
+      ...listing,
+      image: {
+        url: originalUrl,
+        filename: filename,
+      },
+    };
+  });
+
   let listings = await Listing.insertMany(initData.data);
 
   // ** Add listing owner using mongoose query **
@@ -30,7 +43,8 @@ const addListing = async () => {
     {},
     { owner: "69eb6a8af7b8513b79aec841" },
   );
-  console.log(newListings);
+
+  console.log(listings);
 };
 
 addListing();
