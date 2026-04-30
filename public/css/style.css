@@ -267,7 +267,7 @@ footer {
   /* display: flex; */
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1rem;
   padding-bottom: 1rem;
 }
 
@@ -348,3 +348,29 @@ footer {
 }
 
 /* ----------- Filters ---------- */
+
+/* --------- search --------- */
+
+.search-box {
+  width: 35rem;
+}
+
+.search-btn {
+  background: linear-gradient(to right, #e61e4d 0%, #e31c5f 50%, #d70466 100%);
+  border: none;
+  color: #fff;
+  border-radius: 1.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.search-btn:hover,
+.search-btn:active {
+  background: linear-gradient(to right, #cc1943 0%, #c21751 50%, #be035a 100%);
+}
+
+.search-box input {
+  border-radius: 1.5rem;
+  padding: 0.7rem 1.4rem;
+}
+
+/* --------- search --------- */
