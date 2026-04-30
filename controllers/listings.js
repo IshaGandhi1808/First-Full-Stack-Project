@@ -142,3 +142,20 @@ module.exports.destroyListing = async (req, res) => {
   req.flash("success", "Deleted successfully.");
   res.redirect("/listings");
 };
+
+module.exports.searchResult = async (req, res) => {
+  let { location } = req.query;
+  let result = await Listing.find({
+    $or: [
+      {
+        location: { $regex: location, $options: "i" },
+      },
+      { country: { $regex: location, $options: "i" } },
+    ],
+  });
+
+  // $regex ====> Match the text (same as LIKE in SQL)
+  // $option : "i" =====> case-insensitive (PHONE, phone, Phone all match)
+
+  res.render("listings/search", { result });
+};

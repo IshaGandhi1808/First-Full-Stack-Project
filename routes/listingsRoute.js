@@ -17,6 +17,7 @@ const {
   renderEditForm,
   updateListing,
   destroyListing,
+  searchResult,
 } = require("../controllers/listings");
 
 const multer = require("multer");
@@ -56,6 +57,12 @@ router
 // create New Listing form
 
 router.route("/new").get(isLogin, renderNewForm);
+
+// ----------- search -------
+
+router.route("/search").get(searchResult);
+
+// ----------- search -------
 
 // show listing
 // Update List

@@ -4,7 +4,6 @@
     class="navbar navbar-expand-md bg-body-tertiary border-bottom sticky-top p-3"
   >
     <div class="container-fluid p-0">
-      <!-- <a class="navbar-brand" href="#">Navbar</a> -->
       <a href="/listings" class="navbar-brand"
         ><i class="fa-regular fa-compass"></i
       ></a>
@@ -27,8 +26,8 @@
 
         
         <div class="search-box m-auto d-lg-flex d-none">
-          <form class="d-flex w-100" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search destinations" aria-label="Search"/>
+          <form class="d-flex w-100" role="search" action="/listings/search">
+            <input class="form-control me-2" type="search" placeholder="Search destinations" aria-label="Search" name="location" />
             <button class="btn search-btn d-flex align-items-center gap-1  text-light" type="submit"> <i class="fa-solid fa-magnifying-glass"></i> <span class="d-md-flex d-none fw-semibold"> Search</span></button>
           </form>
         </div>
@@ -47,11 +46,9 @@
   </nav>
 
   <div class="search-box w-100 d-flex justify-content-center align-items-center py-3 border-bottom d-lg-none">
-    <form class="d-flex w-100 px-4" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search destinations" aria-label="Search"/>
+    <form class="d-flex w-100 px-4" role="search" method="get" action="/listings/search" >
+      <input class="form-control me-2" type="search" placeholder="Search destinations" aria-label="Search" name="location" />
       <button class="btn search-btn d-flex align-items-center gap-1 text-light" type="submit"> <i class="fa-solid fa-magnifying-glass"></i> <span class="d-md-flex d-none fw-semibold"> Search</span></button>
     </form>
   </div>
-
 </div>
-
