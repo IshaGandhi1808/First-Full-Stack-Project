@@ -277,7 +277,16 @@ footer {
   gap: 2rem;
   overflow: hidden;
   overflow-x: auto;
-  scrollbar-width: none;
+  /* scrollbar-width: none; */
+}
+
+.filter-categories::-webkit-scrollbar {
+  height: 3px;
+}
+
+.filter-categories::-webkit-scrollbar-thumb {
+  border-radius: 15rem;
+  background: #e2e2e2;
 }
 
 .filter-category {
@@ -288,13 +297,13 @@ footer {
   cursor: pointer;
   opacity: 0.8;
   white-space: nowrap;
-  padding-bottom: 2px;
+  /* padding-bottom: 2px; */
 }
 
 .filter-category:hover {
   opacity: 1;
-  border-bottom: 2px solid #c2c2c2;
-  padding-top: 2px;
+  /* border-bottom: 2px solid #c2c2c2;
+  padding-top: 2px; */
 }
 
 .filter-category > i {
@@ -325,6 +334,17 @@ footer {
 
 .remove-filter.active {
   display: flex;
+}
+
+.tax-index {
+  /* display: none; */
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.tax-index.active {
+  /* display: inline-block; */
+  opacity: 1;
 }
 
 /* ----------- Filters ---------- */

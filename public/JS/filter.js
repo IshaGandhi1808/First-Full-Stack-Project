@@ -36,7 +36,7 @@ function renderFilterList(filterLists) {
                 <div class="card-img-overlay"></div>
                 <div class="card-body p-0">
                   <p class="card-text list-title">${listing.title}</p>
-                  <p class="card-text list-price">&#8377;${listing.price.toLocaleString("en-IN")} / night </p>
+                  <p class="card-text list-price">&#8377;${listing.price.toLocaleString("en-IN")} / night <i class="tax-index"> &nbsp; &nbsp; &nbsp; +18% GST</i> </p>
                 </div>
               </a>
             </div>
