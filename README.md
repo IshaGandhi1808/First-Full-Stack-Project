@@ -65,7 +65,7 @@ This project demonstrates a complete full-stack application with CRUD functional
 
 ## 👨‍💻 Author
 
-Your Name
+Isha Gandhi
 GitHub: https://github.com/IshaGandhi1808
 
 ---
