@@ -37,14 +37,15 @@ app.use(express.json());
 
 app.use(methodOverride("_method"));
 
-const MONGOOSE_URL = `mongodb://127.0.0.1:27017/wanderlust`;
+// const MONGOOSE_URL = `mongodb://127.0.0.1:27017/wanderlust`;
+const dbUrl = process.env.ATLASDB_URL;
 
 main()
   .then(() => console.log(`Connetion Successful`))
   .catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect(MONGOOSE_URL);
+  await mongoose.connect(dbUrl);
 }
 
 // Use express-session package

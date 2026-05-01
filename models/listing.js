@@ -61,6 +61,7 @@ const listingSchema = new Schema({
       "Cabin",
       "Lakefront",
       "Trending",
+      "Treehouse",
       "Historical homes",
     ],
     required: true,
